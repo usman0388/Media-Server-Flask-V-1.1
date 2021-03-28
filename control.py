@@ -12,7 +12,7 @@ def getDict(path):
         for j in data[i]:
             print("\t"+i+"/"+j)
     return data
-def changeWidth(path):
+def changeWidth(path,width,height):
 
     try:
             
@@ -20,8 +20,8 @@ def changeWidth(path):
 
         print('Original Dimensions : ',img.shape)
 
-        width = 640
-        height = 960
+        #width = 640
+        #height = 960
         dim = (width, height)
 
         # resize image
