@@ -21,11 +21,49 @@ link_Anime_MOV = "https://thetvdb.com/movies/"
 link_Movie = "https://thetvdb.com/movies/"
 
 Meta_CSV = []
+def organize_words(name):
+    name = name.lower()
+    name = name.replace(" ","-")
+    return name
 def generate_link(name,path):
     name = name.lower()
     name = name.replace(" ","-")
     new_path = path+name
     return new_path
+def getSeasonMeta(link_path, save_path):
+    # .row~ .row .img-responsive
+    # .img-responsive
+    try:
+        options = Options()
+        options.headless = True
+        driver = webdriver.Chrome(options=options,executable_path='driver/chromedriver.exe')
+        driver.get(link_path)
+        backgrounds = driver.find_elements_by_css_selector('.row~ .row .img-responsive')
+        if len(backgrounds) == 0:
+            backgrounds = driver.find_elements_by_css_selector('.lightbox .img-responsive')
+        count = 0
+        if not os.path.exists(os.path.dirname(save_path)):
+            try:
+                os.makedirs(os.path.dirname(save_path))
+            except OSError as exc: # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
+        for i in backgrounds:
+            try:
+                src = i.get_attribute('src')
+                # download the image
+                urllib.urlretrieve(src,save_path+str(count)+".png")
+                count = count +1
+            except:
+                count = count +1
+        driver.close()  
+    except HTTPError as e:
+        print(e)
+    except URLError as e:
+        print(e)
+    except:
+        print(link_path)
+
 
 def checkIfExistInList(title):
     if len(Meta_CSV) == 0:
@@ -70,7 +108,7 @@ def writeMetaCsv(title, syp, filename):
     except:
         print("Error while saving")
 
-def get_meta_anime(link_path,path):
+def get_meta_anime(link_path,save_path):
     try:
         options = Options()
         options.headless = True
@@ -88,6 +126,13 @@ def get_meta_anime(link_path,path):
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(12) .img-responsive')
         if len(backgrounds) == 0:
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(17) .img-responsive')
+        
+        if not os.path.exists(os.path.dirname(save_path)):
+            try:
+                os.makedirs(os.path.dirname(save_path))
+            except OSError as exc: # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
 
         count = 0
         for i in backgrounds:
@@ -95,7 +140,7 @@ def get_meta_anime(link_path,path):
                 src = i.get_attribute('src')
 
                 # download the image
-                urllib.urlretrieve(src,path+str(count)+".png")
+                urllib.urlretrieve(src,save_path+str(count)+".png")
                 count = count +1
             except:
                 count = count +1
@@ -119,6 +164,12 @@ def get_meta_anime_movie(link_path,path):
         sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
         #backgrounds = driver.find_elements_by_css_selector('.lightbox .img-responsive')
         backgrounds = driver.find_elements_by_css_selector('.row:nth-child(13) .img-responsive')
+        if not os.path.exists(os.path.dirname(save_path)):
+            try:
+                os.makedirs(os.path.dirname(save_path))
+            except OSError as exc: # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
         
         count = 0
         for i in backgrounds:
@@ -151,7 +202,15 @@ def get_meta_movies(link_path,path):
         sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
         #backgrounds = driver.find_elements_by_css_selector('.lightbox .img-responsive')
         backgrounds = driver.find_elements_by_css_selector('.row:nth-child(11) .img-responsive')
-        
+        if len(backgrounds) == 0:
+            backgrounds = driver.find_elements_by_css_selector('.row:nth-child(10) .img-responsive')
+        if not os.path.exists(os.path.dirname(save_path)):
+            try:
+                os.makedirs(os.path.dirname(save_path))
+            except OSError as exc: # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
+
         count = 0
         for i in backgrounds:
             try:
@@ -216,8 +275,23 @@ def readCSV(path, list_data):
 #get_meta_anime(generate_link("Fate Apocrypha",main_link),"static/")
 #changeWidth("0.png",1920,1080)
 Meta_CSV=readCSV('static/metadata.csv',Meta_CSV)
-root_path_image = "static/images/media/Anime test"
-ImageDir = getDict(root_path_image)
+image_path_anime = "static/images/media/Anime test"
+image_path_anime_movies = "static/images/media/Anime Movies"
+image_path_movie = "static/images/media/movie"
+image_path_show = "static/images/media/shows"
 
-for i in ImageDir:
-    get_meta_anime(generate_link(i,link_Anime_TV),root_path_image+"/"+i+"/")
+root_path_anime = "D:/Anime"
+root_path_anime_movie = "D:/Anime Movies"
+root_path_movie = "D:/movie"
+root_path_show = "D:/shows"
+ImageDir_Anime = getDict(root_path_anime)
+#https://www.thetvdb.com/series/ /official/1
+flag = 1
+for i in ImageDir_Anime:
+    newLink = generate_link(i,link_Anime_TV)
+    get_meta_anime(newLink,image_path_anime+"/"+i+"/")
+    for j in ImageDir_Anime[i]:
+        print(j)
+        getSeasonMeta("https://www.thetvdb.com/series/"+organize_words(i)+"/seasons/official/"+str(flag),image_path_anime+"/"+i+"/"+j+"/" )
+        flag +=1
+    flag = 1
