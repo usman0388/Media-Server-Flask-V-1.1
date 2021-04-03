@@ -64,6 +64,25 @@ def getSeasonMeta(link_path, save_path):
     except:
         print(link_path)
 
+def rewriteCSV(data,filename):
+    try:
+        static_path = "static/"
+        # field names
+        fields = ['title', 'sypnosis']
+        if not os.path.exists(static_path+"/"+filename):
+            with open(static_path+"/"+filename, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(fields)
+                for i in data:
+                    writer.writerow(i)
+        else:
+            with open(static_path+"/"+filename, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(fields)
+                for i in data:
+                    writer.writerow(i)
+    except:
+        print("Error while saving")
 
 def checkIfExistInList(title):
     if len(Meta_CSV) == 0:
@@ -79,6 +98,7 @@ def checkIfExistInList(title):
 def updateIfFound(title, syp, itr):
     if Meta_CSV[itr][1] != syp:
         Meta_CSV[itr][1] = syp
+        rewriteCSV(Meta_CSV,"metadata.csv")
     return True
         
 def writeMetaCsv(title, syp, filename):
@@ -107,7 +127,6 @@ def writeMetaCsv(title, syp, filename):
                 Meta_CSV.append(rows)
     except:
         print("Error while saving")
-
 def get_meta_anime(link_path,save_path):
     try:
         options = Options()
@@ -119,6 +138,9 @@ def get_meta_anime(link_path,save_path):
 
         title = driver.find_element_by_xpath("/html/body/div[3]/h1")
         sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
+        if len(sypnosis.text) == 0: 
+            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[4]/p")
+
         backgrounds = driver.find_elements_by_css_selector('.row:nth-child(15) .img-responsive')
         if len(backgrounds) == 0:
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(16) .img-responsive')
@@ -126,6 +148,8 @@ def get_meta_anime(link_path,save_path):
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(12) .img-responsive')
         if len(backgrounds) == 0:
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(17) .img-responsive')
+        if len(backgrounds) == 0:
+            backgrounds = driver.find_elements_by_css_selector('.row:nth-child(13) .img-responsive')        
         
         if not os.path.exists(os.path.dirname(save_path)):
             try:
@@ -284,14 +308,28 @@ root_path_anime = "D:/Anime"
 root_path_anime_movie = "D:/Anime Movies"
 root_path_movie = "D:/movie"
 root_path_show = "D:/shows"
-ImageDir_Anime = getDict(root_path_anime)
+# ImageDir_Anime = getDict(root_path_anime)
+# #https://www.thetvdb.com/series/ /official/1
+# flag = 1
+# for i in ImageDir_Anime:
+#     newLink = generate_link(i,link_Anime_TV)
+#     get_meta_anime(newLink,image_path_anime+"/"+i+"/")
+#     for j in ImageDir_Anime[i]:
+#         print(j)
+#         getSeasonMeta("https://www.thetvdb.com/series/"+organize_words(i)+"/seasons/official/"+str(flag),image_path_anime+"/"+i+"/"+j+"/" )
+#         flag +=1
+#     flag = 1
+ImageDir_Show = getDict(root_path_show)
 #https://www.thetvdb.com/series/ /official/1
 flag = 1
-for i in ImageDir_Anime:
+for i in ImageDir_Show:
     newLink = generate_link(i,link_Anime_TV)
-    get_meta_anime(newLink,image_path_anime+"/"+i+"/")
-    for j in ImageDir_Anime[i]:
+    get_meta_anime(newLink,image_path_show+"/"+i+"/")
+    for j in ImageDir_Show[i]:
         print(j)
-        getSeasonMeta("https://www.thetvdb.com/series/"+organize_words(i)+"/seasons/official/"+str(flag),image_path_anime+"/"+i+"/"+j+"/" )
+        getSeasonMeta("https://www.thetvdb.com/series/"+organize_words(i)+"/seasons/official/"+str(flag),image_path_show+"/"+i+"/"+j+"/" )
         flag +=1
     flag = 1
+
+# for i in Meta_CSV:
+#     print(i)
