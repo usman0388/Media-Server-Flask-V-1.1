@@ -140,6 +140,12 @@ def get_meta_anime(link_path,save_path):
         sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
         if len(sypnosis.text) == 0: 
             sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[4]/p")
+        if len(sypnosis.text) == 0: 
+            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[1]/p")
+        if len(sypnosis.text) == 0: 
+            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[5]/p")
+        if len(sypnosis.text) == 0: 
+            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[3]/p")    
 
         backgrounds = driver.find_elements_by_css_selector('.row:nth-child(15) .img-responsive')
         if len(backgrounds) == 0:
@@ -212,9 +218,6 @@ def get_meta_anime_movie(link_path,path):
     except URLError as e:
         print(e)
 
-
-
-
 def get_meta_movies(link_path,path):
     try:
         options = Options()
@@ -235,35 +238,6 @@ def get_meta_movies(link_path,path):
                 if exc.errno != errno.EEXIST:
                     raise
 
-        count = 0
-        for i in backgrounds:
-            try:
-                src = i.get_attribute('src')
-
-                # download the image
-                urllib.urlretrieve(src,path+str(count)+".png")
-                count = count +1
-            except:
-                count = count +1
-        writeMetaCsv(title.text,sypnosis.text,"metadata.csv")
-        driver.close()  
-    except HTTPError as e:
-        print(e)
-    except URLError as e:
-        print(e)
-
-def get_meta_TV(link_path,path):
-    try:
-        options = Options()
-        options.headless = True
-        driver = webdriver.Chrome(options=options,executable_path='driver/chromedriver.exe')
-        driver.get(link_path)
-
-        title = driver.find_element_by_xpath("/html/body/div[3]/h1")
-        sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
-        #backgrounds = driver.find_elements_by_css_selector('.lightbox .img-responsive')
-        backgrounds = driver.find_elements_by_css_selector('.row:nth-child(16) .img-responsive')
-        
         count = 0
         for i in backgrounds:
             try:
@@ -321,15 +295,18 @@ root_path_show = "D:/shows"
 #     flag = 1
 ImageDir_Show = getDict(root_path_show)
 #https://www.thetvdb.com/series/ /official/1
-flag = 1
-for i in ImageDir_Show:
-    newLink = generate_link(i,link_Anime_TV)
-    get_meta_anime(newLink,image_path_show+"/"+i+"/")
-    for j in ImageDir_Show[i]:
-        print(j)
-        getSeasonMeta("https://www.thetvdb.com/series/"+organize_words(i)+"/seasons/official/"+str(flag),image_path_show+"/"+i+"/"+j+"/" )
-        flag +=1
-    flag = 1
+# flag = 1
+# for i in ImageDir_Show:
+#     newLink = generate_link(i,link_Anime_TV)
+#     get_meta_anime(newLink,image_path_show+"/"+i+"/")
+#     for j in ImageDir_Show[i]:
+#         print(j)
+#         getSeasonMeta("https://www.thetvdb.com/series/"+organize_words(i)+"/seasons/official/"+str(flag),image_path_show+"/"+i+"/"+j+"/" )
+#         flag +=1
+#     flag = 1
 
 # for i in Meta_CSV:
 #     print(i)
+
+for i in range(1,6):
+    print(i)
