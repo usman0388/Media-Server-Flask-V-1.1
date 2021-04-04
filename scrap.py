@@ -135,18 +135,14 @@ def get_meta_anime(link_path,save_path):
         #driver = webdriver.Chrome(executable_path='driver/chromedriver.exe')
         
         driver.get(link_path)
-
+#         /html/body/div[3]/h1
+# /html/body/div[3]/div[2]/div[2]/div[1]/div[17]/p
         title = driver.find_element_by_xpath("/html/body/div[3]/h1")
-        sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
-        if len(sypnosis.text) == 0: 
-            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[4]/p")
-        if len(sypnosis.text) == 0: 
-            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[1]/p")
-        if len(sypnosis.text) == 0: 
-            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[5]/p")
-        if len(sypnosis.text) == 0: 
-            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[3]/p")    
-
+        sypnosis = "" 
+        for i in range(1,6):
+            sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div["+str(i)+"]/p")
+            if len(sypnosis.text) > 0:
+                break
         backgrounds = driver.find_elements_by_css_selector('.row:nth-child(15) .img-responsive')
         if len(backgrounds) == 0:
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(16) .img-responsive')
@@ -156,7 +152,10 @@ def get_meta_anime(link_path,save_path):
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(17) .img-responsive')
         if len(backgrounds) == 0:
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(13) .img-responsive')        
-        
+        if len(backgrounds) == 0:
+            backgrounds = driver.find_elements_by_css_selector('.row:nth-child(10) .img-responsive')
+        if len(backgrounds) == 0:
+            backgrounds = driver.find_elements_by_css_selector('.row:nth-child(11) .img-responsive')                    
         if not os.path.exists(os.path.dirname(save_path)):
             try:
                 os.makedirs(os.path.dirname(save_path))
@@ -192,7 +191,7 @@ def get_meta_anime_movie(link_path,path):
 
         title = driver.find_element_by_xpath("/html/body/div[3]/h1")
         sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
-        #backgrounds = driver.find_elements_by_css_selector('.lightbox .img-responsive')
+
         backgrounds = driver.find_elements_by_css_selector('.row:nth-child(13) .img-responsive')
         if not os.path.exists(os.path.dirname(save_path)):
             try:
@@ -282,9 +281,9 @@ root_path_anime = "D:/Anime"
 root_path_anime_movie = "D:/Anime Movies"
 root_path_movie = "D:/movie"
 root_path_show = "D:/shows"
-# ImageDir_Anime = getDict(root_path_anime)
+#ImageDir_Anime = getDict(root_path_anime)
 # #https://www.thetvdb.com/series/ /official/1
-# flag = 1
+#flag = 1
 # for i in ImageDir_Anime:
 #     newLink = generate_link(i,link_Anime_TV)
 #     get_meta_anime(newLink,image_path_anime+"/"+i+"/")
@@ -293,8 +292,8 @@ root_path_show = "D:/shows"
 #         getSeasonMeta("https://www.thetvdb.com/series/"+organize_words(i)+"/seasons/official/"+str(flag),image_path_anime+"/"+i+"/"+j+"/" )
 #         flag +=1
 #     flag = 1
-ImageDir_Show = getDict(root_path_show)
-#https://www.thetvdb.com/series/ /official/1
+# ImageDir_Show = getDict(root_path_show)
+# #https://www.thetvdb.com/series/ /official/1
 # flag = 1
 # for i in ImageDir_Show:
 #     newLink = generate_link(i,link_Anime_TV)
@@ -305,8 +304,14 @@ ImageDir_Show = getDict(root_path_show)
 #         flag +=1
 #     flag = 1
 
-# for i in Meta_CSV:
-#     print(i)
+ImageDir_movie = getDict(root_path_movie)
+for i in ImageDir_movie:
+    newLink = generate_link(i,link_Movie)
+    get_meta_anime(newLink,image_path_movie+"/"+i+"/")
+ImageDir_movie_anime = getDict(root_path_anime_movie)
+for i in ImageDir_movie_anime:
+    newLink = generate_link(i,link_Movie)
+    get_meta_anime(newLink,image_path_anime_movies+"/"+i+"/")
 
 for i in range(1,6):
-    print(i)
+    print(f"data {i}")
