@@ -7,7 +7,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 __author__ = 'AT-MOST'
 root_path_image = "static/images/media/Anime test" #Path for meta
-root_path_anime = "media/Anime"#Path for media
+root_path_anime = "D:/Anime"#Path for media
 app = Flask(__name__)
 ImageDir = {}
 Anime_Path = {}

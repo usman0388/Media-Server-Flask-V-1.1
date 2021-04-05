@@ -217,17 +217,28 @@ def get_meta_anime_movie(link_path,path):
     except URLError as e:
         print(e)
 
-def get_meta_movies(link_path,path):
+def get_meta_movies(link_path,save_path):
     try:
         options = Options()
         options.headless = True
         driver = webdriver.Chrome(options=options,executable_path='driver/chromedriver.exe')
         driver.get(link_path)
-
+#/html/body/div[3]/div[2]/div[2]/div[1]/div[14]/p 
+#/html/body/div[3]/div[2]/div[2]/div[1]/div[10]/p 
         title = driver.find_element_by_xpath("/html/body/div[3]/h1")
-        sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div[2]/p")
+        sypnosis = ""
+        for i in range(1,22):
+            try:
+                sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[2]/div[1]/div["+str(i)+"]/p")
+                if len(sypnosis.text) > 0:
+                    break
+            except:
+                print(i)
+
         #backgrounds = driver.find_elements_by_css_selector('.lightbox .img-responsive')
-        backgrounds = driver.find_elements_by_css_selector('.row:nth-child(11) .img-responsive')
+        backgrounds = driver.find_elements_by_css_selector('.row:nth-child(13) .img-responsive')
+        if len(backgrounds) == 0:
+            backgrounds = driver.find_elements_by_css_selector('.row:nth-child(11) .img-responsive')
         if len(backgrounds) == 0:
             backgrounds = driver.find_elements_by_css_selector('.row:nth-child(10) .img-responsive')
         if not os.path.exists(os.path.dirname(save_path)):
@@ -243,7 +254,7 @@ def get_meta_movies(link_path,path):
                 src = i.get_attribute('src')
 
                 # download the image
-                urllib.urlretrieve(src,path+str(count)+".png")
+                urllib.urlretrieve(src,save_path+str(count)+".png")
                 count = count +1
             except:
                 count = count +1
@@ -253,6 +264,8 @@ def get_meta_movies(link_path,path):
         print(e)
     except URLError as e:
         print(e)
+    except:
+        print(link_path)
 
 def readCSV(path, list_data):
     if not os.path.exists(path):
@@ -307,11 +320,11 @@ root_path_show = "D:/shows"
 ImageDir_movie = getDict(root_path_movie)
 for i in ImageDir_movie:
     newLink = generate_link(i,link_Movie)
-    get_meta_anime(newLink,image_path_movie+"/"+i+"/")
-ImageDir_movie_anime = getDict(root_path_anime_movie)
-for i in ImageDir_movie_anime:
-    newLink = generate_link(i,link_Movie)
-    get_meta_anime(newLink,image_path_anime_movies+"/"+i+"/")
+    get_meta_movies(newLink,image_path_movie+"/"+i+"/")
+# ImageDir_movie_anime = getDict(root_path_anime_movie)
+# for i in ImageDir_movie_anime:
+#     newLink = generate_link(i,link_Movie)
+#     get_meta_movies(newLink,image_path_anime_movies+"/"+i+"/")
 
 for i in range(1,6):
     print(f"data {i}")
