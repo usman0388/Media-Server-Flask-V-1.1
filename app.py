@@ -27,7 +27,7 @@ Movie_Path = {}
 @app.route("/")
 def index():
 
-    return  render_template('home.html',data = Anime_Path)
+    return  render_template('home.html',data = Anime_Path, animemov = AnimeMovie_Path, show = TvShow_Path, movie = Movie_Path)
 
 if __name__ == "__main__":
     #ImageDir = getDict(root_path_image)
@@ -37,10 +37,18 @@ if __name__ == "__main__":
     AnimeMovie_Path = getDict(root_path_anime_movie)
     TvShow_Path = getDict(root_path_show)
     Movie_Path = getDict(root_path_movie)
+    print(len(Anime_Path))
+    print(len(AnimeMovie_Path))
+    print(len(TvShow_Path))
+    print(len(Movie_Path))
+
     try:
-        t1 = threading.Thread(target=getMetaAll, args=(root_path_anime,root_path_show,root_path_movie,root_path_anime_movie,image_path_anime,image_path_show,
-        image_path_movie,image_path_anime_movies,))
-        t1.start()
+        total = len(Anime_Path)+len(AnimeMovie_Path)+len(TvShow_Path)+len(Movie_Path)
+        if total > len(Meta_CSV):
+            # t1 = threading.Thread(target=getMetaAll, args=(root_path_anime,root_path_show,root_path_movie,root_path_anime_movie,image_path_anime,image_path_show,
+            # image_path_movie,image_path_anime_movies,))
+            # t1.start()
+            print("Wroking")
 
     except:
         print("Error: Unable to start thread!")

@@ -34,7 +34,6 @@ def changeWidth(path,width,height):
     except:
         print(path+" Not found!")
 
-
 def getMetaAnime(path, image_save_path):
     ImageDir_Anime = getDict(path)
     flag = 1

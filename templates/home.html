@@ -6,20 +6,15 @@
     <div class="row">
       {% for t in data%}
         <div class="col-sm-4 col-xs-4 col-lg-3" style="padding-top: 5%; padding-left: 3%;" >
-          <a href="#" style="text-decoration: none;">
+         
           <figure>
-          <img style="border-radius: 10%; border-radius: 15px;
-          background: #212529;
-          padding: 5%; 
-          width: 200px;
-          height: auto;" class="img-responsive" src="{{ url_for('static', filename='images/media/Anime test/'+t+'/display.jpg')}}" 
+          <a href="#" style="text-decoration: none;">
+          <img class="img-responsive roundedBox" src="{{ url_for('static', filename='images/media/Anime/'+t+'/0.png')}}"
           width="190" height="290">
-          <h4 style="margin-top: -48px;font-family: sans-serif; font-size: 1rem; color: white; font-weight: bold; padding-left: 16px;">{{t}}</h4>
+          <h4 class="TitleText">{{t}}</h4>
           </figure>
           </a>
-          <h3 style="margin-top: -17px; font-family: sans-serif; 
-          font-size: 1rem;
-          color: #fff;  padding-left: 16px;" >
+          <h3 class="SeasonCount">
             Seasons 3
           </h3>
         </div>
@@ -28,9 +23,63 @@
       
     </div>
   </div>
-  <div class="tab-pane fade" id="nav-animemovies" role="tabpanel" aria-labelledby="nav-animemovies-tab">Data 2</div>
-  <div class="tab-pane fade" id="nav-movies" role="tabpanel" aria-labelledby="nav-movies-tab">Data 3</div>
-  <div class="tab-pane fade" id="nav-shows" role="tabpanel" aria-labelledby="nav-shows-tab">Data 4</div>
+  <div class="tab-pane fade" id="nav-animemovies" role="tabpanel" aria-labelledby="nav-animemovies-tab">
+    <div class="row">
+      {% for t in animemov%}
+        <div class="col-sm-4 col-xs-4 col-lg-3" style="padding-top: 5%; padding-left: 3%;" >
+         
+          <figure>
+          <a href="#" style="text-decoration: none;">
+          <img class="img-responsive roundedBox" src="{{ url_for('static', filename='images/media/Anime Movies/'+t+'/0.png')}}"
+          width="190" height="290">
+          <h4 class="TitleText">{{t}}</h4>
+          </figure>
+          </a>
+        </div>
+      {% endfor %}
+
+      
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-movies" role="tabpanel" aria-labelledby="nav-movies-tab">
+    <div class="row">
+      {% for t in movie%}
+        <div class="col-sm-4 col-xs-4 col-lg-3" style="padding-top: 5%; padding-left: 3%;" >
+         
+          <figure>
+          <a href="#" style="text-decoration: none;">
+          <img class="img-responsive roundedBox" src="{{ url_for('static', filename='images/media/movie/'+t+'/0.png')}}"
+          width="190" height="290">
+          <h4 class="TitleText">{{t}}</h4>
+          </figure>
+          </a>
+        </div>
+      {% endfor %}
+
+      
+    </div>
+  </div>
+  <div class="tab-pane fade" id="nav-shows" role="tabpanel" aria-labelledby="nav-shows-tab">
+    <div class="row">
+      {% for t in show%}
+        <div class="col-sm-4 col-xs-4 col-lg-3" style="padding-top: 5%; padding-left: 3%;" >
+         
+          <figure>
+          <a href="#" style="text-decoration: none;">
+          <img class="img-responsive roundedBox" src="{{ url_for('static', filename='images/media/shows/'+t+'/0.png')}}"
+          width="190" height="290">
+          <h4 class="TitleText">{{t}}</h4>
+          </figure>
+          </a>
+          <h3 class="SeasonCount">
+            Seasons 3
+          </h3>
+        </div>
+      {% endfor %}
+
+      
+    </div>
+  </div>
 
 </div>
 {% endblock %}
