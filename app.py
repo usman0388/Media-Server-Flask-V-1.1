@@ -3,10 +3,11 @@ from flask import Flask, request, render_template, send_from_directory, jsonify
 import threading
 import re
 from control import *
+from metaDataClass import *
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-__author__ = 'AT-MOST'
 Meta_CSV = []
+__author__ = 'AT-MOST'
+
 image_path_anime = "static/images/media/Anime"
 image_path_anime_movies = "static/images/media/Anime Movies"
 image_path_movie = "static/images/media/movie"
@@ -23,7 +24,7 @@ Anime_Path = {}
 AnimeMovie_Path = {}
 TvShow_Path = {}
 Movie_Path = {}
-
+csvList = CSVData()
 @app.route("/")
 def index():
 
@@ -31,8 +32,9 @@ def index():
 
 if __name__ == "__main__":
     #ImageDir = getDict(root_path_image)
-    Meta_CSV=readingMeta('static/metadata.csv',Meta_CSV)
-
+    
+    csvList.SetMetaCSV(readingMeta('static/metadata.csv')) 
+    print(csvList.GetMetaCSV())
     Anime_Path = getDict(root_path_anime)
     AnimeMovie_Path = getDict(root_path_anime_movie)
     TvShow_Path = getDict(root_path_show)
@@ -45,11 +47,11 @@ if __name__ == "__main__":
     try:
         total = len(Anime_Path)+len(AnimeMovie_Path)+len(TvShow_Path)+len(Movie_Path)
         if total > len(Meta_CSV):
-            # t1 = threading.Thread(target=getMetaAll, args=(root_path_anime,root_path_show,root_path_movie,root_path_anime_movie,image_path_anime,image_path_show,
-            # image_path_movie,image_path_anime_movies,))
-            # t1.start()
+            t1 = threading.Thread(target=getMetaAll, args=(root_path_anime,root_path_show,root_path_movie,root_path_anime_movie,image_path_anime,image_path_show,
+            image_path_movie,image_path_anime_movies,))
+            t1.start()
             print("Wroking")
-
     except:
         print("Error: Unable to start thread!")
-    app.run(port=6545, debug=True)
+    app.run(port=6545, debug=False)
+    

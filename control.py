@@ -77,6 +77,6 @@ def getMetaAll(AnimePath, TvShowPath, MoviePath, AnimeMoviePath, Save_AnimePath,
     getMetaMovie(MoviePath, Save_MoviePath)
     getMetaAnimeMovie(AnimeMoviePath, Save_AnimeMoviePath)
 
-def readingMeta(path, structure):
-    structure = readCSV(path,structure)
+def readingMeta(path):
+    structure = readCSV(path)
     return structure

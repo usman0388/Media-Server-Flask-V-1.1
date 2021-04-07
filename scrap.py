@@ -9,7 +9,7 @@ from urllib.error import URLError
 from urllib.request import urlopen
 import urllib.request as urllib
 import csv
-from app import Meta_CSV
+import app
 
 link_Anime_TV = "https://thetvdb.com/series/"
 link_Anime_MOV = "https://thetvdb.com/movies/"
@@ -77,20 +77,24 @@ def rewriteCSV(data,filename):
         print("Error while saving")
 
 def checkIfExistInList(title):
-    if len(Meta_CSV) == 0:
+    tempList = app.csvList.GetMetaCSV() 
+    if len(tempList) == 0:
         return -1
     else:
         count = 0
-        for i in Meta_CSV:
+        for i in tempList:
             if title == i[0]:
                 return count
             else:
                 count +=1
     return -1
 def updateIfFound(title, syp, itr):
-    if Meta_CSV[itr][1] != syp:
-        Meta_CSV[itr][1] = syp
-        rewriteCSV(Meta_CSV,"metadata.csv")
+    #insert into index
+    tempList = app.csvList.GetMetaCSV()
+    if tempList[itr][1] != syp:
+        app.csvList.insetInto(itr,syp)
+        tempList = app.csvList.GetMetaCSV()
+        rewriteCSV(tempList,"metadata.csv")
     return True
         
 def writeMetaCsv(title, syp, filename):
@@ -111,12 +115,12 @@ def writeMetaCsv(title, syp, filename):
                 writer = csv.writer(file)
                 writer.writerow(fields)
                 writer.writerow(rows)
-                Meta_CSV.append(rows)
+                app.csvList.addRow(row)
         else:
             with open(static_path+"/"+filename, 'a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow(rows)
-                Meta_CSV.append(rows)
+                app.csvList.addRow(row)
     except:
         print("Error while saving")
 def get_meta_anime(link_path,save_path):
@@ -128,6 +132,8 @@ def get_meta_anime(link_path,save_path):
         driver.get(link_path)
         title = driver.find_element_by_xpath("/html/body/div[3]/h1")
         sypnosis = "" 
+        #print(app.csvList.GetMetaCSV())
+
         for i in range(1,6):
             sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div["+str(i)+"]/p")
             if len(sypnosis.text) > 0:
@@ -246,7 +252,8 @@ def get_meta_movies(link_path,save_path):
     except:
         print(link_path)
 
-def readCSV(path, list_data):
+def readCSV(path):
+    list_data = []
     if not os.path.exists(path):
         print("FILE NOT EXISTS.")
     else:
