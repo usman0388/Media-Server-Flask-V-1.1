@@ -132,7 +132,6 @@ def get_meta_anime(link_path,save_path):
         driver.get(link_path)
         title = driver.find_element_by_xpath("/html/body/div[3]/h1")
         sypnosis = "" 
-        #print(app.csvList.GetMetaCSV())
 
         for i in range(1,6):
             sypnosis = driver.find_element_by_xpath("/html/body/div[3]/div[2]/div[1]/div[1]/div["+str(i)+"]/p")

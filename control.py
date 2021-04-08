@@ -12,10 +12,10 @@ def getDict(path):
                 nested.append(j)
         data[i] = nested
         nested = []
-    for i in data:
-        print(i)
-        for j in data[i]:
-            print("\t"+i+"/"+j)
+    # for i in data:
+    #     print(i)
+    #     for j in data[i]:
+    #         print("\t"+i+"/"+j)
     return data
 def changeWidth(path,width,height):
 
