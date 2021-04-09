@@ -25,10 +25,17 @@ AnimeMovie_Path = {}
 TvShow_Path = {}
 Movie_Path = {}
 csvList = CSVData()
-@app.route("/")
+@app.route("/dashboard/")
 def index():
     try:
         return  render_template('home.html',data = Anime_Path, animemov = AnimeMovie_Path, show = TvShow_Path, movie = Movie_Path)
+    except Exception as e:
+        return render_template('505.html', exp = e)
+@app.route("/login/")
+@app.route("/")
+def login_page():
+    try:
+        return render_template('login.html')
     except Exception as e:
         return render_template('505.html', exp = e)
 @app.errorhandler(404)

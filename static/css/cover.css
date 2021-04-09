@@ -142,3 +142,11 @@ body {
     height: 0%;
   }
 }
+.img {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.ftco-section {
+  padding: 7em 0;
+}
