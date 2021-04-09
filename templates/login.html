@@ -12,6 +12,7 @@
 
 </head>
 <body class="img js-fullheight" style="background-image: url({{ url_for('static', filename='images/Background/bg2.jpg')}}); height: 937px;">
+
     <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center">
@@ -23,22 +24,22 @@
     <div class="col-md-6 col-lg-4">
         <div class="login-wrap p-0">
             <h3 class="mb-4 text-center">Have an account?</h3>
-            <form action="#" class="signin-form">
+            <form action="#" class="signin-form" method="POST">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" required>
+                    <input type="text" class="form-control" placeholder="Username" name="username" value="{{request.form.username}}" required>
                 </div>
                 <div class="form-group">
-                    <input id="password-field" type="password" class="form-control" placeholder="Password" required>
-                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <input id="password-field" type="password" class="form-control" placeholder="Password" name="password" value="{{request.form.password}}" required>
                 </div>
             <div class="form-group">
-                <button type="submit" class="form-control btn btn-primary submit px-3">Log In</button>
+                <button type="submit" class="form-control btn btn-primary submit px-3" value="Login">Log In</button>
             </div>
             <div class="form-group d-md-flex">
                 <div class="text-md-center">
                 <a href="#" style="color: #fff">Forgot Password</a>
                 </div>
             </div>
+            {{error}}
             </form>
         </div>
     </div>

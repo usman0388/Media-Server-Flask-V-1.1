@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, send_from_directory, jsonify
+from flask import Flask, request, render_template, send_from_directory, jsonify, flash, url_for, redirect
 import threading
 import re
 from control import *
@@ -31,13 +31,29 @@ def index():
         return  render_template('home.html',data = Anime_Path, animemov = AnimeMovie_Path, show = TvShow_Path, movie = Movie_Path)
     except Exception as e:
         return render_template('505.html', exp = e)
-@app.route("/login/")
-@app.route("/")
+
+
+
+@app.route("/login/", methods=["GET","POST"])
+@app.route("/", methods=["GET","POST"])
 def login_page():
+    error = ""
     try:
-        return render_template('login.html')
+        if request.method == "POST":
+            attemted_user = request.form['username']
+            attemted_pass = request.form['password']
+
+            print(attemted_user)
+            print(attemted_pass)
+            if attemted_user == "admin" and attemted_pass=="pass":
+                return redirect(url_for('index'))
+            else:
+                error = "Invalid Credentials. Try again!"
+        return render_template('login.html', error = error)
     except Exception as e:
         return render_template('505.html', exp = e)
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html')
@@ -53,10 +69,10 @@ if __name__ == "__main__":
 
     try:
         total = len(Anime_Path)+len(AnimeMovie_Path)+len(TvShow_Path)+len(Movie_Path)
-        if total > len(Meta_CSV):
-            # t1 = threading.Thread(target=getMetaAll, args=(root_path_anime,root_path_show,root_path_movie,root_path_anime_movie,image_path_anime,image_path_show,
-            # image_path_movie,image_path_anime_movies,))
-            # t1.start()
+        if total-1 > len(csvList.GetMetaCSV()):
+            t1 = threading.Thread(target=getMetaAll, args=(root_path_anime,root_path_show,root_path_movie,root_path_anime_movie,image_path_anime,image_path_show,
+            image_path_movie,image_path_anime_movies,))
+            t1.start()
             print("Wroking")
     except:
         print("Error: Unable to start thread!")
