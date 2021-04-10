@@ -31,24 +31,30 @@ def season(var):
     try:
         print(var)
         syp = csvList.returnSyp(var)
+        print(syp)
         newBack = "images/media/"
+        type_season = ""
         flag = False
         for i in Anime_Path:
-            i == var:
+            if i == var:
                 flag = True
         
         if flag==True:
             newBack = newBack+"Anime/"+var+"/background.jpg"
+            type_season = "Anime/"
         else:
             newBack = newBack+"shows/"+var+"/background.jpg"
+            type_season = "shows/"
+            print("else part")
 
-        return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack)
+        return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season)
     except Exception as e:
         return render_template('505.html', exp = e)
     
 
 
 @app.route("/dashboard/",methods=["GET","POST"])
+@app.route("/", methods=["GET","POST"])
 def index():
     try:
         return  render_template('home.html',data = Anime_Path, animemov = AnimeMovie_Path, show = TvShow_Path, movie = Movie_Path, BackImage= root_background)
@@ -58,7 +64,7 @@ def index():
 
 
 @app.route("/login/", methods=["GET","POST"])
-@app.route("/", methods=["GET","POST"])
+#@app.route("/", methods=["GET","POST"])
 def login_page():
     error = ""
     try:
