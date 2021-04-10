@@ -25,10 +25,33 @@ AnimeMovie_Path = {}
 TvShow_Path = {}
 Movie_Path = {}
 csvList = CSVData()
-@app.route("/dashboard/")
+root_background = "images/Background/bg2.jpg"
+@app.route("/season/<var>", methods=["GET"])
+def season(var):
+    try:
+        print(var)
+        syp = csvList.returnSyp(var)
+        newBack = "images/media/"
+        flag = False
+        for i in Anime_Path:
+            i == var:
+                flag = True
+        
+        if flag==True:
+            newBack = newBack+"Anime/"+var+"/background.jpg"
+        else:
+            newBack = newBack+"shows/"+var+"/background.jpg"
+
+        return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack)
+    except Exception as e:
+        return render_template('505.html', exp = e)
+    
+
+
+@app.route("/dashboard/",methods=["GET","POST"])
 def index():
     try:
-        return  render_template('home.html',data = Anime_Path, animemov = AnimeMovie_Path, show = TvShow_Path, movie = Movie_Path)
+        return  render_template('home.html',data = Anime_Path, animemov = AnimeMovie_Path, show = TvShow_Path, movie = Movie_Path, BackImage= root_background)
     except Exception as e:
         return render_template('505.html', exp = e)
 
