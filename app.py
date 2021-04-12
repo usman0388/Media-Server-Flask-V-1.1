@@ -35,10 +35,14 @@ def season(var):
         newBack = "images/media/"
         type_season = ""
         flag = False
+        seasonCount = 0
+        types = ""
         for i in Anime_Path:
             if i == var:
                 flag = True
-        
+                seasonCount = len(Anime_Path[i])
+                types = "Anime"
+
         if flag==True:
             newBack = newBack+"Anime/"+var+"/background.jpg"
             type_season = "Anime/"
@@ -46,10 +50,15 @@ def season(var):
             newBack = newBack+"shows/"+var+"/background.jpg"
             type_season = "shows/"
             print("else part")
-
-        return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season)
+            for i in TvShow_Path:
+                if i == var:
+                    seasonCount = len(TvShow_Path[i])
+                    types = "shows"
+        return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount, Type = types)
     except Exception as e:
-        return render_template('505.html', exp = e)
+        return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount)
+        
+        #return render_template('505.html', exp = e)
     
 
 
@@ -94,6 +103,7 @@ if __name__ == "__main__":
     AnimeMovie_Path = getDict(root_path_anime_movie)
     TvShow_Path = getDict(root_path_show)
     Movie_Path = getDict(root_path_movie)
+
 
 
     try:
