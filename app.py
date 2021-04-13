@@ -35,12 +35,12 @@ def season(var):
         newBack = "images/media/"
         type_season = ""
         flag = False
-        seasonCount = 0
+        seasonCount = []
         types = ""
         for i in Anime_Path:
             if i == var:
                 flag = True
-                seasonCount = len(Anime_Path[i])
+                seasonCount = Anime_Path[i]
                 types = "Anime"
 
         if flag==True:
@@ -52,8 +52,9 @@ def season(var):
             print("else part")
             for i in TvShow_Path:
                 if i == var:
-                    seasonCount = len(TvShow_Path[i])
+                    seasonCount = TvShow_Path[i]
                     types = "shows"
+        #print(seasonCount)
         return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount, Type = types)
     except Exception as e:
         return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount)
