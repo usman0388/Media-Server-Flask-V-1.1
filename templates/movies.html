@@ -1,0 +1,28 @@
+{% extends "header.html"%}
+{% block body %}
+<div class="row" id="p1">
+    <div class="col-sm-4 col-xs-4 col-lg-2" style="padding-top: 5%;" >
+    <figure> 
+    <img class="img-responsive roundedBoxWhite" src="{{ url_for('static', filename='images/media/'+Type_season+TitleText+'/0.png')}}"
+    alt="{{TitleText}}" onerror="this.onerror=null;this.src='static/images/imagefound.png';" width="300" height="600">
+    </figure>
+    </div>
+    <div style="padding-top: 5%;" class="col-sm-8 col-xs-8 col-lg-8">
+        <h1 class="seasonTitle">{{TitleText}}</h1>
+        <h6 class="sypnosis">{{Syp}}</h6>
+    </div>
+</div>
+<div class="row">
+  {% for t in seasons %}
+    <div class="col-sm-4 col-xs-4 col-lg-2" style="padding-top: 5%; " >
+      <figure> 
+      <a href="/season/watch/{{TitleText}}/season/{{t|string}}" style="text-decoration: none;">
+      <img class="img-responsive roundedBox" src="{{ url_for('static', filename='images/media/'+Type+'/'+TitleText+'/'+t+'/0.png')}}"
+      alt="{{t}}" onerror="this.onerror=null;this.src='/static/images/media/{{Type}}/{{TitleText}}/0.png';" width="190" height="290">
+      <h4 class="TitleText"> {{t}}</h4>
+      </figure>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

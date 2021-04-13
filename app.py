@@ -26,6 +26,47 @@ TvShow_Path = {}
 Movie_Path = {}
 csvList = CSVData()
 root_background = "images/Background/bg2.jpg"
+
+@app.route("/movie/<var>", methods=["GET"])
+def movie(var):
+    try:
+        print(var)
+        syp = csvList.returnSyp(var)
+        print(syp)
+        newBack = "images/media/"
+        type_season = ""
+        flag = False
+        seasonCount = []
+        types = ""
+        for i in AnimeMovie_Path:
+            if i == var:
+                flag = True
+                types = "Anime Movies"
+
+        if flag==True:
+            newBack = newBack+"Anime Movies/"+var+"/background.jpg"
+            type_season = "Anime Movies/"
+        else:
+            newBack = newBack+"movie/"+var+"/background.jpg"
+            type_season = "movie/"
+            print("else part")
+            for i in Movie_Path:
+                if i == var:
+                    types = "movie"
+
+        return  render_template('movies.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount, Type = types)
+    except Exception as e:
+        return  render_template('movies.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount)
+        
+        #return render_template('505.html', exp = e)
+    
+
+
+
+
+
+
+
 @app.route("/season/<var>", methods=["GET"])
 def season(var):
     try:
@@ -54,12 +95,9 @@ def season(var):
                 if i == var:
                     seasonCount = TvShow_Path[i]
                     types = "shows"
-        #print(seasonCount)
         return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount, Type = types)
     except Exception as e:
-        return  render_template('shows.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount)
-        
-        #return render_template('505.html', exp = e)
+        return render_template('505.html', exp = e)
     
 
 
