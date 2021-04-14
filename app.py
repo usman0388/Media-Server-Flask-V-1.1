@@ -36,12 +36,13 @@ def movie(var):
         newBack = "images/media/"
         type_season = ""
         flag = False
-        seasonCount = []
+        videoCount = []
         types = ""
         for i in AnimeMovie_Path:
             if i == var:
                 flag = True
                 types = "Anime Movies"
+                videoCount = getVideoPath(root_path_movie+"/"+i)
 
         if flag==True:
             newBack = newBack+"Anime Movies/"+var+"/background.jpg"
@@ -53,6 +54,7 @@ def movie(var):
             for i in Movie_Path:
                 if i == var:
                     types = "movie"
+                    videoCount = getVideoPath(root_path_movie+"/"+i)
 
         return  render_template('movies.html',TitleText = var, Syp = syp, BackImage = newBack, Type_season = type_season, seasons = seasonCount, Type = types)
     except Exception as e:
@@ -60,12 +62,6 @@ def movie(var):
         
         #return render_template('505.html', exp = e)
     
-
-
-
-
-
-
 
 @app.route("/season/<var>", methods=["GET"])
 def season(var):
@@ -143,7 +139,8 @@ if __name__ == "__main__":
     TvShow_Path = getDict(root_path_show)
     Movie_Path = getDict(root_path_movie)
 
-
+    for i in Movie_Path:
+        getVideoPath(root_path_movie+"/"+i)
 
     try:
         total = len(Anime_Path)+len(AnimeMovie_Path)+len(TvShow_Path)+len(Movie_Path)

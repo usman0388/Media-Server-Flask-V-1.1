@@ -80,3 +80,12 @@ def getMetaAll(AnimePath, TvShowPath, MoviePath, AnimeMoviePath, Save_AnimePath,
 def readingMeta(path):
     structure = readCSV(path)
     return structure
+
+def getVideoPath(pathData):
+    pathList = []
+    ext = [".mp4",".mkv",".avi","mov"]
+    for file in os.listdir(pathData):
+        if file.endswith(tuple(ext)):
+            print(os.path.join(pathData, file))
+            pathList.append(os.path.join(pathData, file))
+    print(pathList)
