@@ -1,0 +1,25 @@
+{% extends "header.html"%}
+{% block body %}
+<div id="p1" class="col-lg-10" style="padding-left: 15%; padding-top: 5%;">
+    <video id="videoPlayer" class="video-js vjs-big-play-centered">        
+          <source src="{{ url_for('static', filename=VPath)}}" type="video/mp4"/>
+
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that supports the video.
+        </p>
+    </video>
+    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/video-player.js')}}"></script>
+
+</div>
+<div class="row" style="margin: 10%;" >
+  {% for t in range(1,EpisodeCount) %}
+    <div id="p2" class="col-sm-8 col-xs-8 col-lg-8" style="margin: 16px;" >
+      <a href="/season/watch/{{TitleText}}/season/{{Syp}}/{{t|string}}" style="text-decoration: none;">
+      <h4 class="EpisodeNumber"> Episode {{t|string}}</h4>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

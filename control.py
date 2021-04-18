@@ -1,6 +1,8 @@
 import os
 import cv2
 from scrap import *
+from passlib.hash import sha256_crypt
+
 def getDict(path):    
     data = {}
     arr = os.listdir(path)
@@ -12,10 +14,6 @@ def getDict(path):
                 nested.append(j)
         data[i] = nested
         nested = []
-    # for i in data:
-    #     print(i)
-    #     for j in data[i]:
-    #         print("\t"+i+"/"+j)
     return data
 def changeWidth(path,width,height):
 
@@ -82,10 +80,41 @@ def readingMeta(path):
     return structure
 
 def getVideoPath(pathData):
+    pathList = ""
+    ext = [".mp4",".mkv",".avi","mov"]
+    for file in os.listdir(pathData):
+        if file.endswith(tuple(ext)):
+            print(os.path.join(pathData, file))
+            pathList= pathData+"/"+file
+    print(pathList)
+    return pathList
+def getEpisodeList(pathData):
     pathList = []
     ext = [".mp4",".mkv",".avi","mov"]
     for file in os.listdir(pathData):
         if file.endswith(tuple(ext)):
             print(os.path.join(pathData, file))
-            pathList.append(os.path.join(pathData, file))
+            pathList.append(pathData+"/"+file)
     print(pathList)
+    return pathList
+def getFileName(pathData):
+    pathList = ""
+    ext = [".mp4",".mkv",".avi","mov"]
+    for file in os.listdir(pathData):
+        if file.endswith(tuple(ext)):
+            print(os.path.join(pathData, file))
+            pathList= file
+    print(pathList)
+    return pathList
+
+def checkIfExists(name, dataList):
+    for i in dataList:
+        if i == name:
+            return True
+    return False
+
+def SessionCommit(tempModel, db):
+    db.session.add(tempModel)
+    db.session.commit()
+def GetUserFrmDatabase(attemted_user, UserModel):
+    return UserModel.query.filter_by(UserName=attemted_user).first_or_404()

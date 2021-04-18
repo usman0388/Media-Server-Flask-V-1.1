@@ -156,6 +156,24 @@ body {
   width: auto;
   height: auto;
 }
+#p2 {
+  border-radius: 15px;
+  background-color: whitesmoke;
+  width: fit-content;
+  height: auto;
+}
+.EpisodeNumber {
+  font-family: sans-serif;
+  font-size: 1rem;
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  /* padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 21%; */
+  padding: 20px;
+  margin-inline-end: 0%;
+}
 .seasonTitle {
   font-family: sans-serif;
   font-size: 1.8rem;

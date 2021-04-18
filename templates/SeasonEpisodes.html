@@ -12,4 +12,13 @@
         <h6 class="sypnosis">{{Syp}}</h6>
     </div>
 </div>
+<div class="row" style="margin: 10%;" >
+    {% for t in range(1,EpisodeCount) %}
+      <div id="p2" class="col-sm-8 col-xs-8 col-lg-8" style="margin: 16px;" >
+        <a href="/season/watch/{{TitleText}}/season/{{Syp}}/{{t|string}}" style="text-decoration: none;">
+        <h4 class="EpisodeNumber"> Episode {{t|string}}</h4>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
