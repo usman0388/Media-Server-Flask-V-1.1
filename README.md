@@ -1,3 +1,4 @@
+
 # Server-Flask-V-1.1 - Movie/ Show Streaming Website
 This server is made using flask, reads the file from the given path, generate the links from the name of the show/ movie and gets its Meta-data from automated web scraping script running in threads using headless mode. The gathered, data that is Title, description and posters are saved in a csv file and the images are saved in file system. Sql alchemy database is implemented to save user data and password after encrypting them using passlib library.
 ## Installation
@@ -54,5 +55,15 @@ The data saved in csv file, it does check for duplicate entry but if an already 
 ## Screen Shots
 
 ![media](https://user-images.githubusercontent.com/44601684/118688801-d0b5bb80-b81f-11eb-8bba-55972055827d.PNG)
-
-
+![media1](https://user-images.githubusercontent.com/44601684/118695584-ccd96780-b826-11eb-9528-ff36a9c37e0d.PNG)
+![media2](https://user-images.githubusercontent.com/44601684/118695593-cfd45800-b826-11eb-9b8d-2bb94973bfb5.PNG)
+![media3](https://user-images.githubusercontent.com/44601684/118695601-d1058500-b826-11eb-80f2-6d3de80596dd.PNG)
+![media4](https://user-images.githubusercontent.com/44601684/118695608-d236b200-b826-11eb-9d41-c0d03f24d950.PNG)
+![media5](https://user-images.githubusercontent.com/44601684/118695631-d6fb6600-b826-11eb-9093-42ba2b782000.PNG)
+![media6](https://user-images.githubusercontent.com/44601684/118695720-f0041700-b826-11eb-9e8f-fe8e54629426.PNG)
+![media7](https://user-images.githubusercontent.com/44601684/118695775-fbefd900-b826-11eb-8f48-fe5800087325.PNG)
+![media8](https://user-images.githubusercontent.com/44601684/118695791-0316e700-b827-11eb-9198-1e4963a385e9.PNG)
+![media9](https://user-images.githubusercontent.com/44601684/118695800-06aa6e00-b827-11eb-9aaf-71072cc61798.PNG)
+![media10](https://user-images.githubusercontent.com/44601684/118695820-0ca04f00-b827-11eb-9ddb-738cd4ee3c13.PNG)
+![media11](https://user-images.githubusercontent.com/44601684/118695837-0f9b3f80-b827-11eb-90c2-811abc639061.PNG)
+![media12](https://user-images.githubusercontent.com/44601684/118695848-11fd9980-b827-11eb-9728-ecd39d34bfa7.PNG)
