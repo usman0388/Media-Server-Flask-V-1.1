@@ -1,5 +1,5 @@
 
-# Server-Flask-V-1.1 - Movie/ Show Streaming Website
+# Media-Server-Flask-V-1.1 - Movie/ Show Streaming Website
 This server is made using flask, reads the file from the given path, generate the links from the name of the show/ movie and gets its Meta-data from automated web scraping script running in threads using headless mode. The gathered, data that is Title, description and posters are saved in a csv file and the images are saved in file system. Sql alchemy database is implemented to save user data and password after encrypting them using passlib library.
 ## Installation
 https://chromedriver.chromium.org/
