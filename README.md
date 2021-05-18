@@ -49,5 +49,10 @@ root_path_show = "ENTER YOUR PATH"
 ```
 ## Limitations
 
-The data saved in csv file, it does check for duplicate entry but if an already saved show/ movie directory is deleted form the file system. Then its data will not be deleted from the csv file nor its posters. The show/ movie name should be by the name according to https://thetvdb.com/ naming convention. As it is the website to get meta-data. 
+The data saved in csv file, it does check for duplicate entry but if an already saved show/ movie directory is deleted form the file system. Then its data will not be deleted from the csv file nor its posters. The show/ movie name should be by the name according to https://thetvdb.com/ naming convention. As it is the website to get meta-data.
+
+## Screen Shots
+
+![media](https://user-images.githubusercontent.com/44601684/118688801-d0b5bb80-b81f-11eb-8bba-55972055827d.PNG)
+
 
