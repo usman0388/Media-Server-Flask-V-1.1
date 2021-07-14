@@ -17,9 +17,9 @@ pip install selenium
 
 ```
 ## Login
-User: dawood
+Current login credentials User: dawood
 pass: 9265
-To register a new user go to app.py and uncomment register function
+\nTo register a new user go to app.py and uncomment register function
 ```bash
 @app.route("/register/<Name>&<Password>", methods=["GET"])
  @marshal_with(resourse_fields)
